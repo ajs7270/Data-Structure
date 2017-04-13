@@ -1,14 +1,23 @@
+// 2017.4.13
+// Double Linked List in C
+// made by Jisu An
+
 #include<stdio.h>
 
+// node for linked List
 typedef struct node {
 	int data;
 	struct node* front;
 	struct node* rear;
 }Node;
+
 typedef Node* List;
 
+// push do not divide stack and queue
 void push(int data,List* now);
+// pop data from Last to First 
 int stackPop(List* tail);
+// pop data from First to Last
 int queuePop(List* head, List *tail);
 
 int main(){
@@ -20,7 +29,7 @@ int main(){
 	head->front = head;
 
 	printf("input an integer : ");
-	while ((inputData = getchar()) != '\n')
+	while ((inputData = getchar()) != '\n') // input to use push
 		push(inputData-'0', &tail);
 	printf("Select Method (1) Stack (2) Queue : ");
 	scanf("%d", &select);
@@ -64,13 +73,14 @@ int queuePop(List* head, List *tail){
 	int data = nextNode->data;
 
 	if((*head)->rear != (*tail)){
-		
+
 		(*head)->rear = nextNode->rear;
 		(nextNode->rear)->front = *head;
 
 	}else{
 		*tail = *head;
 	}
+
 	free(nextNode);
 
 	return data;
