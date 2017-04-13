@@ -9,13 +9,13 @@ typedef Node* List;
 
 void push(int data,List* now);
 int stackPop(List* tail);
-int queuePop(List* head);
+int queuePop(List* head, List *tail);
 
 int main(){
-	
+
 	int select;
 	int inputData;
-	List head = (Node*)malloc(sizeof(Node));	
+	List head = (Node*)malloc(sizeof(Node));
 	List tail = head;
 	head->front = head;
 
@@ -23,8 +23,8 @@ int main(){
 	while ((inputData = getchar()) != '\n')
 		push(inputData-'0', &tail);
 	printf("Select Method (1) Stack (2) Queue : ");
-	scanf("%d", &select);	
-	
+	scanf("%d", &select);
+
 	if (1 == select){
 		while (head != tail)
 			printf("%d\n", stackPop(&tail));
@@ -32,7 +32,7 @@ int main(){
 	}
 	else if(2 == select){
 		while (head != tail)
-			printf("%d\n", queuePop(&head));
+			printf("%d\n", queuePop(&head, &tail));
 	}
 	else{
 		printf("select error!\n");
@@ -49,7 +49,7 @@ void push(int data, List* now){
 int stackPop(List* tail){
 	int data = (*tail)->data;
 	Node* preNode = (*tail)->front;
-	
+
 	free(preNode->rear);
 
 	preNode->rear = NULL;
@@ -58,14 +58,19 @@ int stackPop(List* tail){
 	return data;
 }
 
-int queuePop(List* head){
+int queuePop(List* head, List *tail){
+
 	Node* nextNode = (*head)->rear;
 	int data = nextNode->data;
 
-	(*head)->rear = nextNode->rear;
-	if (nextNode)
-	(nextNode->rear)->front = *head;
-	
+	if((*head)->rear != (*tail)){
+		
+		(*head)->rear = nextNode->rear;
+		(nextNode->rear)->front = *head;
+
+	}else{
+		*tail = *head;
+	}
 	free(nextNode);
 
 	return data;
