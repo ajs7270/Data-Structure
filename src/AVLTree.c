@@ -117,9 +117,19 @@ Node* mkNode(int data, Node* parent){
   return newNode;
 }
 
+Node* RotateRight(Node *root){
+	Node* leftNode = root->left;
+  
+}
+Node* RotateLeft(Node *root);
+
 Node* LL(Node* root){
 
 }
-Node* LR(Node* root);
-Node* RL(Node* root);
+Node* LR(Node* root){
+
+}
+Node* RL(Node* root){
+
+}
 Node* RR(Node* root);
