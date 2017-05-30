@@ -3,6 +3,7 @@
 // made by Jisu An
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #define TRUE 1
 
@@ -18,7 +19,7 @@ typedef struct node{
 
 //function for avl tree
 Node* insert(Node* root,int data);
-Node* delete(Node* root);
+Node* delete(Node* root, int data);
 Node* balance(Node* root);
 Node* mkNode(int data, Node* parent);
 
@@ -181,7 +182,7 @@ Node* mkNode(int data, Node* parent){
   newNode->parent = parent;
   newNode->height = 1;
   newNode->right = NULL;
-  newNode->left = NULL:
+  newNode->left = NULL;
 
   return newNode;
 }
@@ -193,7 +194,7 @@ Node* LL(Node* root){
     root->left = rootLeft->right;
     rootLeft->right->parent = root;
   }else{
-    root->left = NULL:
+    root->left = NULL;
   }
 
   rootLeft->right = root;
@@ -253,7 +254,7 @@ Node* RR(Node* root){
 }
 
 void main(int argc, char* argv[]){
-  Node *root = mknode(1, NULL);
+  Node *root = mkNode(1, NULL);
   root = insert(root, 2);
   root = insert(root, 3);
   root = insert(root, 4);
