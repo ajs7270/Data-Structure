@@ -48,7 +48,7 @@ void preorder(Node* nowNode);
 Node* insert(Node* root,int data){
   Node* current = root;
 
-  while(current->data != data){
+  while (current->data != data){
 
     /*
      *new data insert to right position
@@ -58,16 +58,18 @@ Node* insert(Node* root,int data){
       if(current->right){
         current = current->right;
       }else{
-        mkNode(data, current);
+        current->right = mkNode(data, current);
         current = current->right;
+		
       }
 
     }else if(data < current->data){
       if(current->left){
         current = current->left;
       }else{
-        mkNode(data, current);
+        current->left = (data, current);
         current = current->left;
+		
       }
     }else{
       return root;
@@ -98,16 +100,14 @@ Node* delete(Node* root,int data){
       if(current->right){
         current = current->right;
       }else{
-        mkNode(data, current);
-        current = current->right;
+		  return root;	
       }
 
     }else if(data < current->data){
       if(current->left){
         current = current->left;
       }else{
-        mkNode(data, current);
-        current = current->left;
+		  return root;
       }
     }else{
       break;
@@ -155,16 +155,19 @@ Node* balance(Node *root){
     //LR
       LR(root);
       root = LL(root);
+	  return root;
     }else{
     //LL
       root = LL(root);
+	  return root;
     }
   }else if(height(root->left) - height(root->right) < -1){
     if(height(root->left) - height(root->right) > 0){
     //RL
       RL(root);
       root = RR(root);
-    }else{
+	  return root;
+	}else{
     //RR
       root = LL(root);
     }
