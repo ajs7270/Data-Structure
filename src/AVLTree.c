@@ -48,6 +48,7 @@ void preorder(Node* nowNode);
 Node* insert(Node* root,int data){
   Node* current = root;
 
+  if (root->data == data){ return root; }
   while (current->data != data){
 
     /*
@@ -158,7 +159,20 @@ Node* balance(Node *root){
 	  return root;
     }else{
     //LL
-      root = LL(root);
+		if (root->parent){
+			/*
+			 *if LL or RR case check root's parent node
+			 */
+			if (root->data > root->parent->data){
+				root->parent->right = LL(root);
+			}
+			else{
+				root->parent->left = LL(root);
+			}		
+		}
+		else{
+			root = LL(root);
+		}
 	  return root;
     }
   }else if(height(root->left) - height(root->right) < -1){
@@ -166,10 +180,24 @@ Node* balance(Node *root){
     //RL
       RL(root);
       root = RR(root);
+
 	  return root;
 	}else{
     //RR
-      root = RR(root);
+		if (root->parent){
+			/*
+			*if LL or RR case check root's parent node
+			*/
+			if (root->data > root->parent->data){
+				root->parent->right = RR(root);
+			}
+			else{
+				root->parent->left = RR(root);
+			}
+		}
+		else{
+			root = RR(root);
+		}      
     }
   }else{
     return root;
@@ -200,7 +228,10 @@ Node* LL(Node* root){
     root->left = NULL;
   }
 
+  root->height -= 2;
+
   rootLeft->right = root;
+  rootLeft->parent = root->parent;
   root->parent = rootLeft;
 
   return rootLeft;
@@ -214,13 +245,12 @@ void LR(Node* root){
 
   if(root->left->left){
     rootLeft->right = root->left->left;
+	rootLeft->right->parent = rootLeft;
     root->left->left = rootLeft;
   }else{
     rootLeft->right = NULL;
   }
-
   rootLeft->parent = root->left;
-
 }
 
 void RL(Node* root){
@@ -231,13 +261,12 @@ void RL(Node* root){
 
   if(root->right->right){
     rootRight->left = root->right->right;
+	rootRight->left->parent = rootRight;
     root->right->right = rootRight;
   }else{
     rootRight->left = NULL;
   }
-
   rootRight->parent = root->right;
-
 }
 
 Node* RR(Node* root){
@@ -250,14 +279,26 @@ Node* RR(Node* root){
     root->right = NULL;
   }
 
+  root->height -= 2;
+
   rootRight->left = root;
+  rootRight->parent = root->parent;
   root->parent = rootRight;
+  
 
   return rootRight;
 }
 
+void inorder(Node* nowNode){
+
+}
+void preorder(Node* nowNode){
+
+}
+
+
 void main(int argc, char* argv[]){
-  Node *root = mkNode(1, NULL);
+  Node *root = NULL;
   int inputdata;
   int menu;
 
@@ -268,7 +309,12 @@ void main(int argc, char* argv[]){
 	  scanf("%d", &menu);
 	  
 	  if (menu == 1){
-		  root = insert(root,inputdata);
+		  if (root == NULL){
+			  root = mkNode(inputdata, NULL);
+		  }
+		  else{
+			  root = insert(root, inputdata);
+		  }
 	  }
 	  else if(menu == 2){
 		  root = delete(root,inputdata);
