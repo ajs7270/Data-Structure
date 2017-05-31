@@ -258,10 +258,27 @@ Node* RR(Node* root){
 
 void main(int argc, char* argv[]){
   Node *root = mkNode(1, NULL);
-  root = insert(root, 2);
-  root = insert(root, 3);
-  root = insert(root, 4);
-  root = insert(root, 5);
-  root = delete(root, 5);
-  
+  int inputdata;
+  int menu;
+
+  while (TRUE){
+	  printf("Input : ");
+	  scanf("%d", &inputdata);
+	  printf("1) Insert 2) Delete : ");
+	  scanf("%d", &menu);
+	  
+	  if (menu == 1){
+		  root = insert(root,inputdata);
+	  }
+	  else if(menu == 2){
+		  root = delete(root,inputdata);
+	  }
+	  else{ }
+
+	  printf("Preorder: ");
+	  preorder(root); printf("\n");
+	  printf("Inorder: ");
+	  inorder(root); printf("\n");
+
+  }
 }
