@@ -87,7 +87,7 @@ Node* insert(Node* root,int data){
     return current;
 }
 
-//새로운 root 값을 반환
+
 Node* delete(Node* root,int data){
   Node* current = root;
   while(TRUE){
@@ -169,7 +169,7 @@ Node* balance(Node *root){
 	  return root;
 	}else{
     //RR
-      root = LL(root);
+      root = RR(root);
     }
   }else{
     return root;
