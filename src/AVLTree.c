@@ -1,6 +1,7 @@
 // 2017.5.28
 // AVL Tree in C
 // made by Jisu An
+// I don't compelite this code
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -61,7 +62,7 @@ Node* insert(Node* root,int data){
       }else{
         current->right = mkNode(data, current);
         current = current->right;
-		
+
       }
 
     }else if(data < current->data){
@@ -70,7 +71,7 @@ Node* insert(Node* root,int data){
       }else{
         current->left = (data, current);
         current = current->left;
-		
+
       }
     }else{
       return root;
@@ -101,7 +102,7 @@ Node* delete(Node* root,int data){
       if(current->right){
         current = current->right;
       }else{
-		  return root;	
+		  return root;
       }
 
     }else if(data < current->data){
@@ -168,7 +169,7 @@ Node* balance(Node *root){
 			}
 			else{
 				root->parent->left = LL(root);
-			}		
+			}
 		}
 		else{
 			root = LL(root);
@@ -197,7 +198,7 @@ Node* balance(Node *root){
 		}
 		else{
 			root = RR(root);
-		}      
+		}
     }
   }else{
     return root;
@@ -284,7 +285,7 @@ Node* RR(Node* root){
   rootRight->left = root;
   rootRight->parent = root->parent;
   root->parent = rootRight;
-  
+
 
   return rootRight;
 }
@@ -307,7 +308,7 @@ void main(int argc, char* argv[]){
 	  scanf("%d", &inputdata);
 	  printf("1) Insert 2) Delete : ");
 	  scanf("%d", &menu);
-	  
+
 	  if (menu == 1){
 		  if (root == NULL){
 			  root = mkNode(inputdata, NULL);
