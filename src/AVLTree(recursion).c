@@ -88,13 +88,14 @@ Node* delete(Node* root, int data){
 }
 
 Node *rotateright(Node* root){
-  node *y;
-  y=x->left;
-  x->left=y->right;
-  y->right=x;
-  x->ht=height(x);
-  y->ht=height(y);
-  return(y);
+  node *leftNode;
+
+  leftNode=root->left;
+  root->left=leftNode->right;
+  leftNode->right=root;
+  root->hight=height(root);
+  leftNode->hight=height(leftNode);
+  return leftNode;
 }
 Node *rotateleft(Node* root){
   node *y;
