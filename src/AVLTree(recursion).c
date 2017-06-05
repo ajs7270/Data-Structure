@@ -28,8 +28,8 @@ int balanceFactor(Node *root);
 int Height(Node* root);
 
 //fuction for tree traversal
-void preorder(node *root);
-void inorder(node *root);
+void preorder(Node *root);
+void inorder(Node *root);
 
 
 void main(int argc, char* argv[]){
@@ -46,11 +46,11 @@ void main(int argc, char* argv[]){
     if (menu == 1){
       root = insert(root, inputdata);
     }
-    else (menu == 2){
+    else if(menu == 2){
       root = delete(root,inputdata);
     }
     else{
-      printf("possible input number is 1 or 2\n")
+      printf("possible input number is 1 or 2\n");
     }
 
     printf("Preorder: ");
@@ -70,62 +70,116 @@ Node* insert(Node* root,int data){
   }else{
     if(data < root->data){ // input left child node
       root->left = insert(root->left,data);
-      if(){
-        if()
+      if(balanceFactor(root)==2){
+        if(data > root->left->data){//LR case
+          root = LR(root);
+        }else{ // LL case
+          root = LL(root);
+        }
       }
     }else{ // input right child node
       root->right = insert(root->right,data);
-      if(){
-
+      if(balanceFactor(root)==-2){
+        if(data > root->right->data){//RR case
+          root = RR(root);
+        }else{ //RL case
+          root = RL(root);
+        }
       }
     }
   }
   root->height = Height(root);
   return root;
 }
+
 Node* delete(Node* root, int data){
+  Node* temp;
 
-}
+  if(root == NULL){
+    return root;
+  }else{
+    if(data < root->data){ // if data is exist, this data exists left child node
+      root->left = delete(root->left,data);
+      if(balanceFactor(root)==2){
+        if(data > root->left->data){//LR case
+          root = LR(root);
+        }else{ // LL case
+          root = LL(root);
+        }
+      }
+    }else{ // if data is exist, this data exists right child node
+         if(data > root->data){
+           root->right = delete(root->right,data);
+           if(balanceFactor(root)==-2){
+             if(data > root->right->data){//RR case
+               root = RR(root);
+             }else{ //RL case
+               root = RL(root);
+             }
+           }
+         }else{ // find this data or not found this data
+           if(root->right!=NULL){
+             temp=root->right;
 
+           while(temp->left!= NULL)
+            temp=temp->left;
+
+           root->data=temp->data;
+           root->right=delete(root->right,temp->data);
+
+           if(balanceFactor(root)==2)//Rebalance during windup
+              if(balanceFactor(root->left)>=0)
+                root=LL(root);
+              else
+                root=LR(root);
+          }else
+            return(root->left);
+        }
+      }
+    }
+    root->height = Height(root);
+    return root;
+  }
 Node *rotateright(Node* root){
-  node *leftNode;
+  Node *leftNode;
 
   leftNode=root->left;
   root->left=leftNode->right;
   leftNode->right=root;
-  root->hight=height(root);
-  leftNode->hight=height(leftNode);
+  root->height=Height(root);
+  leftNode->height=Height(leftNode);
   return leftNode;
 }
-Node *rotateleft(Node* root){
-  node *y;
-  y=x->right;
-  x->right=y->left;
-  y->left=x;
-  x->ht=height(x);
-  y->ht=height(y);
 
-  return(y);
+Node *rotateleft(Node* root){
+  Node *rightNode;
+  rightNode=root->right;
+  root->right=rightNode->left;
+  rightNode->left=root;
+  root->height=Height(root);
+  rightNode->height=Height(rightNode);
+
+  return(rightNode);
 }
 Node *RR(Node* root){
-  T=rotateleft(T);
-  return(T);
+  root=rotateleft(root);
+  return(root);
 }
 Node *LL(Node* root){
-  T=rotateright(T);
-  return(T);
+  root=rotateright(root);
+  return(root);
 }
 Node *LR(Node* root){
-  T->left=rotateleft(T->left);
-  T=rotateright(T);
+  root->left=rotateleft(root->left);
+  root=rotateright(root);
 
-  return(T);
+  return(root);
 }
 Node *RL(Node* root){
-  T->right=rotateright(T->right);
-  T=rotateleft(T);
+  root->right=rotateright(root->right);
+  root=rotateleft(root);
 
-  return(T);
+  return(root);
 }
 
 int balanceFactor(Node *root){
@@ -146,39 +200,39 @@ int balanceFactor(Node *root){
     return(leftHeight-rightHeight);
 }
 int Height(Node* root){
-  int leftHight,rightHight;
+  int leftHeight,rightHeight;
    if(root == NULL)
        return(0);
 
    if(root->left==NULL)
-       leftHight = 0;
+       leftHeight = 0;
    else
-       leftHight = 1 + root->left->height;
+       leftHeight = 1 + root->left->height;
 
    if(root->right==NULL)
-       rightHight = 0;
+       rightHeight = 0;
    else
-       rightHight = 1+root->right->height;
+       rightHeight = 1+root->right->height;
 
-   if(rightHight>leftHight){
-     return rightHight;
+   if(rightHeight>leftHeight){
+     return rightHeight;
    }else{
-     return leftHight;
+     return leftHeight;
    }
 }
 
-void preorder(node *root){
+void preorder(Node *root){
   if(root){
-        printf("%d ",T->data);
-        preorder(T->left);
-        preorder(T->right);
+        printf("%d ",root->data);
+        preorder(root->left);
+        preorder(root->right);
     }
 }
 
-void inorder(node *root){
+void inorder(Node *root){
   if(root){
-      inorder(T->left);
-      printf("%d ",T->data);
-      inorder(T->right);
+      inorder(root->left);
+      printf("%d ",root->data);
+      inorder(root->right);
   }
 }
