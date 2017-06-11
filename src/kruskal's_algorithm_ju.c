@@ -135,6 +135,7 @@ void kruskal(int numberOfEdge)
       if (uSet != vSet) // 서로의 대표 원소가 같지 않은 경우에만
       {
          printf("(%d,%d) %d\n", e.u, e.v, e.key);
+		 sum += e.key;
          edgeCount++; // 간선을 하나 늘린다
          SetUnion(uSet, vSet); // 두 집합을 합친다
       }
@@ -170,5 +171,5 @@ int main(){
   printf("input Number of edge : ");
   scanf("&d",&numberOfEdge);
 
-  kruskal(numberOfEdge); // 현재 간선의 갯수는 7개로 만들어놓았다.
+  kruskal(numberOfEdge); 
 }
