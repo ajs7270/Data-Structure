@@ -10,6 +10,7 @@
 ms[] array this is to store the vertices that are present in mst to check the cyclic condition
 vertices , edges are globally defined for no of verices and edges respectively
 */
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -185,7 +186,7 @@ void Kruskalmst(edge graph[],long int ver,edge mst[])
     // temporary struct for storing and swapping the structs of edges
     edge temp;
     // storing the value of ms[i]=edge number to check the cyclic graph
-    long int ms[V+1];// to check the cyclic
+    long int * ms = malloc(sizeof(long int)*(V+1));// to check the cyclic
     long int i,j,k=0;
     // first assigning all the values in the array to be 0
     for(i=0;i<vertices;i++)
@@ -252,14 +253,16 @@ int main()
     scanf("%ld",&edges);
     // finding the number of edges does a graph contain and creating a edge array of struct edge
     //creating a graph array of structs that contain all the edges
-    edge g[edges];
+    //edge g[edges];
+	edge* g = (edge*)malloc(edges*sizeof(edge));
 	// calling create which asks the user for the input
     create_graph(g);
 	printf("\nThe entered graph is:\n");
     // printing the inputted graph
     print(g,edges);
     // mst array maintains the mst edges that is v-1 edges
-    edge mst[v-1];
+    //edge mst[v-1];
+	edge* mst = (edge*)malloc((v - 1)*sizeof(edge));
 	// calling the function krushkal
     Kruskalmst(g,v,mst);
     // to print the minimum spanning tree after running krushkals algorithm
